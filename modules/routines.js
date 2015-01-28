@@ -27,19 +27,29 @@ var routines = function(settings) {
 		rule.minute = 0; // occur every hour
 		var j = schedule.scheduleJob(rule, function() {
 			cb();
+			return;
 		});
 	};
-
+	module.minute = function(cb) {
+		var rule = new schedule.RecurrenceRule();
+		rule.second = 0; // occur every minute
+		var j = schedule.scheduleJob(rule, function() {
+			cb();
+			return;
+		});
+	};
 	module.everyDay = function(cb) {
 		var rule = new schedule.RecurrenceRule();
 		rule.hour = 12; // occur every hour
 		var j = schedule.scheduleJob(rule, function() {
 			cb();
+			return;
 		});
 	};
 
 	module.once = function(cb) {
-		if(cb) cb();
+		if (cb) cb();
+		return;
 	};
 
 	module.getUnixSecond = function() {
@@ -49,9 +59,10 @@ var routines = function(settings) {
 
 	module.getCurrTimeCondition = function() {
 		// 1 = morning, 2 = afternoon, 3 = evening, 4 = night
+		return;
 	};
 
-	
+
 	return module;
 };
 

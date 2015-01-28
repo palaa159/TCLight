@@ -2,14 +2,15 @@ var wunderAPI = 'http://api.wunderground.com/api/4127799bc4bc6295/conditions/q/N
 	request = require('request'),
 	util = require('util'),
 	log = function(msg) {
-		return util.log('::: Weather ::: '.cyan + (msg).bold);
+		return util.log('::: Weather ::: '.cyan + (msg));
 	};
 
 var weather = {};
 
 weather.getCurrentWeatherCondition = function(cb) {
 	request(wunderAPI, function(err, res, body) {
-		if (!error && response.statusCode == 200 && cb) {
+		if (!err && res.statusCode == 200 && cb) {
+			// log(body.current_observation);
 			cb(body); // Show the HTML for the Google homepage.
 		}
 	});

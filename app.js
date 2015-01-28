@@ -30,8 +30,16 @@
 
 var http = require('http'),
 	nodemailer = require('nodemailer'),
+	util = require('util'),
+	colors = require('colors'),
 	// For Raspi only
 	gpio = require('gpio');
+
+var log = function(msg) {
+	util.log('::: APP DEBUG ::: '.magenta);
+	util.log(colors.white.bold(msg));
+	util.log('::::::::::::::::: '.magenta);
+};
 
 /*
 	Defining My modules
@@ -53,15 +61,14 @@ var mo_settings = require('./modules/settings'),
 var app = {};
 app.init = function() {
 	mo_routines.everyHour(function() {
-		console.log('–––––––––––');
-		console.log('It happens EVERY HOUR');
-		console.log('–––––––––––');
+		log('It happens EVERY HOUR');
 	});
 	// mo_interrupters.twitterListener().start(['love']);
 	// mo_fadecandy.start();
-	mo_routines.once(function() {
+	mo_routines.minute(function() {
 		mo_weather.getCurrentWeatherCondition(function(data) {
-			console.log(data);
+			data = JSON.parse(data);
+			log('The weather now is ' + data['current_observation']['weather'] + ', ' + data['current_observation']['wind_mph'] + ' mph. heading from ' + data['current_observation']['wind_degrees'] + ' degrees.');
 		});
 	});
 };
